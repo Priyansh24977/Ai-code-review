@@ -1,230 +1,162 @@
-# 🤖 AI Code Reviewer
+# ⚡ AI Code Reviewer
 
-An AI-powered Code Review application that analyzes source code and provides detailed feedback using Google's Gemini AI. The application helps developers improve code quality by identifying bugs, suggesting best practices, improving readability, and recommending optimizations.
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Frontend-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ai-code-review-kappa-ten.vercel.app/)
+[![Railway Deployment](https://img.shields.io/badge/Railway-Backend-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://ai-code-review-production-35ed.up.railway.app/health)
+[![Gemini AI](https://img.shields.io/badge/Google_Gemini-3.6_Flash-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 
-## 🚀 Live Demo
-
-- **Frontend:** https://your-frontend-url.vercel.app
-- **Backend:** https://your-backend-url.up.railway.app
-
-*(Replace these URLs after deployment.)*
+An AI-powered Code Review application that analyzes source code across **multiple programming languages** and delivers instant, structured feedback using Google's **Gemini 3.6 Flash**.
 
 ---
 
-## 📸 Screenshots
+## 🚀 Live Demo
 
-### Home Page
-
-> Add a screenshot here.
-
-### AI Review Result
-
-> Add a screenshot here.
+- 🌐 **Live Web Application (Vite + React on Vercel):** [https://ai-code-review-kappa-ten.vercel.app](https://ai-code-review-kappa-ten.vercel.app/)
+- ⚡ **Production Backend API (Express on Railway):** [https://ai-code-review-production-35ed.up.railway.app](https://ai-code-review-production-35ed.up.railway.app)
+- 🏥 **API Health Check Endpoint:** [https://ai-code-review-production-35ed.up.railway.app/health](https://ai-code-review-production-35ed.up.railway.app/health)
 
 ---
 
 ## ✨ Features
 
-- 📝 Built-in Code Editor
-- 🤖 AI-powered code review using Gemini 2.0 Flash
-- ⚡ Instant feedback
-- 📚 Markdown formatted responses
-- 🎨 Syntax highlighting
-- 💻 Clean and responsive UI
-- 🌐 REST API architecture
+- 🌐 **Multi-Language Support**: Review JavaScript, TypeScript, Python, Java, C++, Go, Rust, SQL, and HTML/CSS.
+- 📝 **Live Interactive Code Editor**: Built with PrismJS syntax highlighting and real-time character & line counting.
+- 🤖 **Senior AI Reviewer Agent**: Driven by Gemini 3.6 Flash for detecting bugs, performance bottlenecks, and security flaws.
+- 🎨 **Modern Dark Glassmorphism UI**: High-contrast, responsive split-pane design with custom scrollbars and loading animations.
+- 🛡️ **Production Security**: Hardened with `helmet` HTTP security headers, CORS origin restrictions, and 30 req/15 min rate-limiting.
+- 📱 **Mobile Friendly**: Features automatic tab navigation (`📝 Code Editor` vs `🔍 AI Review`) for small screens.
+- 📋 **One-Click Actions**: Quick buttons to copy code, copy formatted review markdown, or clear workspace.
 
 ---
 
 ## 🛠 Tech Stack
 
 ### Frontend
-
-- React 19
-- Vite
-- Axios
-- React Markdown
-- PrismJS
-- Highlight.js
-- React Simple Code Editor
+- **Framework**: React 19 + Vite
+- **HTTP Client**: Axios
+- **Markdown Processing**: React Markdown + Rehype Highlight (Github Dark Theme)
+- **Syntax Highlighting & Editor**: PrismJS + React Simple Code Editor
 
 ### Backend
-
-- Node.js
-- Express.js
-- Google Gemini API
-- dotenv
-- CORS
+- **Runtime**: Node.js + Express
+- **AI SDK**: `@google/generative-ai` (Gemini 3.6 Flash)
+- **Security & Protection**: `helmet`, `express-rate-limit`, `cors`
+- **Environment Management**: `dotenv`
 
 ---
 
 ## 📂 Project Structure
 
 ```
-AI-Code-Reviewer/
-│
-├── FrontEnd/
+code-review/
+├── Frontend/              # React 19 + Vite Web Application
 │   ├── src/
-│   ├── public/
-│   ├── package.json
+│   │   ├── App.jsx        # Main split-pane Editor & Review interface
+│   │   ├── App.css        # Glassmorphic dark styling & mobile tabs
+│   │   └── main.jsx
+│   ├── .env.example
+│   └── package.json
 │
-├── BackEnd/
+├── BackEnd/               # Node.js + Express AI API Service
 │   ├── src/
-│   ├── package.json
-│   ├── .env
+│   │   ├── controllers/   # ai.controller.js (Input validation & limit guard)
+│   │   ├── services/      # ai.service.js (Gemini 3.6 Flash prompt integration)
+│   │   ├── routes/        # ai.routes.js (/ai/get-review)
+│   │   └── app.js         # Security headers, CORS, rate limiting, health route
+│   ├── server.js          # Startup env check, 0.0.0.0 binding & graceful shutdown
+│   ├── Dockerfile         # Multi-stage production container build
+│   ├── .env.example
+│   └── package.json
 │
+├── docker-compose.yml     # Container orchestration setup
+├── DEPLOYMENT.md          # Cloud deployment guide (Vercel, Render, Railway, Docker)
 └── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Local Development Setup
 
-### Clone the Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/AI-Code-Reviewer.git
-
-cd AI-Code-Reviewer
+git clone https://github.com/Priyansh24977/Ai-code-review.git
+cd Ai-code-review
 ```
 
----
-
-## Backend Setup
+### 2. Backend Setup
 
 ```bash
 cd BackEnd
-
 npm install
 ```
 
-Create a `.env` file:
+Create a `.env` file in `BackEnd/`:
 
 ```env
-GOOGLE_GEMINI_KEY=YOUR_GEMINI_API_KEY
 PORT=3000
+NODE_ENV=development
+GOOGLE_GEMINI_KEY=YOUR_GOOGLE_GEMINI_API_KEY
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
 Start the backend:
 
 ```bash
-npm start
-```
-
-or
-
-```bash
 npm run dev
 ```
 
----
-
-## Frontend Setup
+### 3. Frontend Setup
 
 ```bash
-cd FrontEnd
-
+cd ../Frontend
 npm install
 ```
 
-Create a `.env` file:
+Create a `.env` file in `Frontend/`:
 
 ```env
 VITE_API_URL=http://localhost:3000
 ```
 
-Run the frontend:
+Start the frontend:
 
 ```bash
 npm run dev
 ```
 
----
-
-## 🔑 Environment Variables
-
-### Backend
-
-| Variable | Description |
-|----------|-------------|
-| GOOGLE_GEMINI_KEY | Gemini API Key |
-| PORT | Server Port |
-
-### Frontend
-
-| Variable | Description |
-|----------|-------------|
-| VITE_API_URL | Backend API URL |
+Open `http://localhost:5173` in your browser.
 
 ---
 
-## 🔄 API Endpoint
+## 🔄 API Reference
 
-### Review Code
+### Send Code for AI Review
 
-**POST**
+`POST /ai/get-review`
 
-```
-/ai/get-review
-```
-
-Request
-
+#### Request Body
 ```json
 {
-  "code": "function sum(a,b){return a+b}"
+  "code": "function sum(a, b) { return a + b; }",
+  "language": "javascript"
 }
 ```
 
-Response
-
-```text
-The code works correctly.
-
-Suggestions:
-- Use arrow functions.
-- Add JSDoc comments.
-- Add input validation.
-```
-
----
-
-## 📌 Future Improvements
-
-- Authentication
-- Review History
-- Export Review as PDF
-- Copy Review Button
-- Multiple Programming Language Support
-- Streaming AI Responses
-- Dark/Light Theme
-- Code Comparison View
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
+#### Response Body
+Returns structured Markdown containing:
+- ❌ **Issues Identified** (bugs, anti-patterns, missing validation)
+- ✅ **Recommended Fix** (refactored production code snippet)
+- 💡 **Best Practices & Optimizations**
 
 ---
 
 ## 👨‍💻 Author
 
 **Priyansh Dwivedi**
-
-- GitHub: https://github.com/Priyansh24977
-- LinkedIn: https://www.linkedin.com/in/priyansh-dwivedi-a69a19333
+- GitHub: [@Priyansh24977](https://github.com/Priyansh24977)
+- LinkedIn: [Priyansh Dwivedi](https://www.linkedin.com/in/priyansh-dwivedi-a69a19333)
 
 ---
 
-⭐ If you found this project helpful, consider giving it a star!
+⭐ If you found this project helpful, give it a star on GitHub!
