@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3.6-flash",
     systemInstruction: `
                 Here’s a solid system instruction for your AI code reviewer:
 
@@ -40,12 +40,11 @@ const model = genAI.getGenerativeModel({
 
                 ❌ Bad Code:
                 \`\`\`javascript
-                                function fetchData() {
+                function fetchData() {
                     let data = fetch('/api/data').then(response => response.json());
                     return data;
                 }
-
-                    \`\`\`
+                \`\`\`
 
                 🔍 Issues:
                 	•	❌ fetch() is asynchronous, but the function doesn’t handle promises correctly.
@@ -53,18 +52,18 @@ const model = genAI.getGenerativeModel({
 
                 ✅ Recommended Fix:
 
-                        \`\`\`javascript
+                \`\`\`javascript
                 async function fetchData() {
                     try {
                         const response = await fetch('/api/data');
-                        if (!response.ok) throw new Error("HTTP error! Status: $\{response.status}");
+                        if (!response.ok) throw new Error("HTTP error! Status: \${response.status}");
                         return await response.json();
                     } catch (error) {
                         console.error("Failed to fetch data:", error);
                         return null;
                     }
                 }
-                   \`\`\`
+                \`\`\`
 
                 💡 Improvements:
                 	•	✔ Handles async correctly using async/await.
@@ -72,21 +71,16 @@ const model = genAI.getGenerativeModel({
                 	•	✔ Returns null instead of breaking execution.
 
                 Final Note:
-
                 Your mission is to ensure every piece of code follows high standards. Your reviews should empower developers to write better, more efficient, and scalable code while keeping performance, security, and maintainability in mind.
-
-                Would you like any adjustments based on your specific needs? 🚀 
     `
 });
 
 
-async function generateContent(prompt) {
+async function generateContent(code, language = "javascript") {
+    const prompt = `Please perform a detailed code review for the following ${language} code snippet:\n\n\`\`\`${language}\n${code}\n\`\`\``;
     const result = await model.generateContent(prompt);
 
-    console.log(result.response.text())
-
     return result.response.text();
-
 }
 
-module.exports = generateContent    
+module.exports = generateContent;
