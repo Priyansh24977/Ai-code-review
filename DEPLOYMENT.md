@@ -13,7 +13,35 @@ This guide details how to deploy the **AI Code Reviewer** to popular cloud provi
 
 ---
 
-## Option 1: Deploying Backend to Render (Free & Fast)
+## 🚂 Option 1: Redeploying on Railway (Recommended)
+
+Since your GitHub repository `Priyansh24977/Ai-code-review` is connected to Railway, **Railway automatically triggers a new deployment whenever you push to `main`**!
+
+### Automatic Deployment Status
+Because we just executed `git push origin main`, Railway is **already building and deploying the latest code automatically**!
+
+### How to Check / Trigger Manual Redeploy on Railway:
+1. Go to your [Railway Dashboard](https://railway.app/dashboard).
+2. Click on your **Ai-code-review** project and select your service.
+3. Click the **Deployments** tab to watch the build log progress.
+4. If you ever need to force a manual redeploy:
+   - Click **Deployments** ➔ Click the **`...`** menu next to the latest commit ➔ Click **Redeploy**.
+
+### Railway Environment Variables Checklist
+In Railway under **Variables**, ensure the following key-value pairs are saved:
+- `GOOGLE_GEMINI_KEY`: `your_actual_google_gemini_api_key`
+- `NODE_ENV`: `production`
+- `ALLOWED_ORIGINS`: `*` *(or your frontend URL)*
+
+### Railway Service Configuration Settings
+If you deployed Backend as a monorepo subfolder in Railway:
+- **Root Directory**: `BackEnd`
+- **Build Command**: `npm install`
+- **Start Command**: `npm start`
+
+---
+
+## Option 2: Deploying Backend to Render (Free & Fast)
 
 1. Create a free account on [Render.com](https://render.com).
 2. Click **New +** ➔ **Web Service**.
